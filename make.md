@@ -89,10 +89,10 @@ CFLAGS = -g -c
 TARGET = test
 
 $(TARGET) : $(OBJECTS)
-                $(CC) -o $(TARGET) $(OBJECTS)
+    $(CC) -o $(TARGET) $(OBJECTS)
 
 clean : 
-                rm -rf $(OBJECTS) $(TARGET) core 
+    rm -rf $(OBJECTS) $(TARGET) core 
 
 main.o : io.h main.c 
 read.o : io.h read.c
