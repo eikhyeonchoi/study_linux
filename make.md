@@ -41,7 +41,7 @@ $ make clean
     Makefile에 지정해둔 명령어가 실행되어 파일이 삭제됨
 
 
-예제
+예제 - 매크로
 ------------------------------------------------------
 OBJS = main.o read.o write.o // 매크로 지정(Macro makes Makefile happy)
 
@@ -49,7 +49,7 @@ test : $(OBJS)
 gcc -o test $(OBJS)
 ------------------------------------------------------
 
-예제
+예제 - CFLAGS
 ------------------------------------------------------
 OBJECTS = main.o read.o write.o // 매크로
 SRCS = main.c read.c write.c // 없어도 됨
@@ -65,17 +65,17 @@ $(TARGET): $(OBJECTS)
 clean : // 레이블
     rm -rf $(OBJECTS) $(TARGET) core 
 
-main.o : io.h main.c <- (1)
+main.o : io.h main.c
 read.o : io.h read.c
 write.o: io.h write.c
 ------------------------------------------------------
 
-예제
+예제 - 확장자규칙
 ------------------------------------------------------
 .SUFFIXES : .c .o 
 // 확장자 규칙
 // 파일의 확장자를 보고 그에 따라 적절한 연산을 수행시키는 규칙
-// .SUFFIXESS를 입력하면 make파일에게 주의 깊게 처리할 파일들의 확장자를 등록해 준다고 이해하면 될 것임
+// .SUFFIXESS를 입력하면 make파일에게 주의 깊게 처리할 파일들의 확장자를 등록해 준다고 이해하면 될 것
 // 아래의 루틴이 자동적으로 실행됨
 // .c.o : 
 //     $(CC) $(CFLAGS) -c $< -o $@
@@ -99,12 +99,12 @@ read.o : io.h read.c
 write.o: io.h write.c
 ------------------------------------------------------
 
-에제
+에제 - 라이브러리 추가
 ------------------------------------------------------
 .SUFFIXES : .c .o 
 
 OBJECTS = main.o read.o write.o
-SRCS = main.c read.c write.c
+SRCS = $(OBJECTS:.c=.o)
 
 CC = gcc 
 CFLAGS = -g -c 
@@ -116,7 +116,7 @@ $(TARGET) : $(OBJECTS)
                 $(CC) -o $(TARGET) $(OBJECTS)
 
 .c.o : # 우리가 확장자 규칙을 구현
-    $(CC) $(INC) $(CFLAGS) $<-
+    $(CC) $(INC) $(CFLAGS) $<
 
 clean : 
     rm -rf $(OBJECTS) $(TARGET) core 
@@ -138,7 +138,7 @@ OBJS = main.o read.o write.o
 SRCS = $(OBJS:.o=.c) 
 // $(MACRO_NAME:OLD=NEW)
 // 내용을 일부만 수정하고 싶을경우 사용
-// SRCS는 main.c read.c write.c가 된다
+// SRCS == main.c read.c write.c
 ------------------------------------------------------
 
 옵션들
@@ -156,6 +156,6 @@ SRCS = $(OBJS:.o=.c)
 $@: 현재 목표 파일의 이름
 $*: 확장자를 제외한 현재 목표 파일 이름
 $<: 현재 필수 조건 파일 중 첫 번째 파일 이름
-$?: 현재 대상보다 최근에 변경된 필수 조건 파일 ㅣㅇ름
+$?: 현재 대상보다 최근에 변경된 필수 조건 파일 이름
 $^: 현재 모든 필수 조건 파일들
 ```

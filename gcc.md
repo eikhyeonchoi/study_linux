@@ -1,4 +1,5 @@
 # gcc
+[gcc](https://wiki.kldp.org/KoreanDoc/html/gcc_and_make/gcc_and_make-2.html)   
 ```
 기본
 $ gcc helloworld.c
@@ -28,7 +29,7 @@ $ ./baz
     단순히 컴파일러와 링커를 호출하는 역할을 해줌
 
 옵션 -I(대문자 i)
-: 헤더파일 위치 지정
+: 헤더파일 위치 지정, 유닉스에 있어 포준 헤더 파일 디렉토리는 "/usr/include"
 $ gcc -c helloworld.c -I.. -Iinclude
     -I<헤더파일의 위치>
     헤더파일을 하위폴더(..)에서 찾거나 현재 디렉토리에 include라는 디렉토리에서 찾음
@@ -58,4 +59,11 @@ d : 아카이브 모듈을 삭제, 삭제할 파일이 없다면 동작하지 �
 t : 아카이브에 있는 파일 리스트 출력
 v : 자세한 내용을 보여주는 verbose 모드
 x : 아카이브에서 오브젝트 파일 추출
+
+예제
+------------------------------------------------------
+$ gcc -c myfunc.c
+$ ar rst libmylib.a myfunc.o
+$ gcc -o helloworld helloworld.c -lmylib -L.
+------------------------------------------------------
 ```
