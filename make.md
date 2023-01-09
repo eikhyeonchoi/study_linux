@@ -1,11 +1,32 @@
 # make
+
+## 통상적 패턴
+```
+$ vi Makefile
+
+CC=<컴파일러>
+CFLAGS=<컴파일 옵션>
+LDFLAGS=<링크 옵션>
+LDLIBS=<링크 라이브러리 목록>
+OBJS=<Object 파일 목록>
+TARGET=<빌드 대상 이름>
+ 
+all: $(TARGET)
+ 
+clean:
+    rm -f *.o
+    rm -f $(TARGET)
+ 
+$(TARGET): $(OBJS)
+$(CC) -o $@ $(OBJS)
+```
+
+## 사용법 및 예제
 ```
 The purpose of the make utility is to determine automatically which pieces of a large program need to be recompiled, and issue the commands to recompile them.
 소스 한 두개로 이루어진 C/C++이 아니라면 gcc로 관리하는 것은 매우 어려움
 효율적으로 관리하고 일관성있게 관리하기 위해 Makefile이라는 형식을 사용하고 make라는 유틸리티를 사용함
 make라는 유틸리티는 보통 현재 디렉토리에 있는 makefile이라는 일정한 규칙을 준수하여 만든 파일의 내욜을 읽어서 목표파일을 만들어 낸다
-
-Makefile 만듦기
 $ vi Makefile
 ------------------------------------------------------
 all: foo

@@ -67,3 +67,28 @@ $ ar rst libmylib.a myfunc.o
 $ gcc -o helloworld helloworld.c -lmylib -L.
 ------------------------------------------------------
 ```
+
+# 라이브러리 생성 및 추가 과정
+```
+test.c << main이 있는 파일
+
+만들 라이브러리 [mylib]
+
+1. mylib.h: 함수 스켈레톤을 적어준다
+extern int functionName();
+
+2. mylib.c: 스켈레톤에 정의된 함수를 구현한다
+#include "mylib.h"
+int functionNmae() {
+    // blah blah blah...
+}
+
+3. 라이브러리를 만든다
+$ gcc -c mylib.c
+$ ar r libmylib.a mylib.o
+$ ar s libmylib.a
+$ ar t libmylib.a
+
+4. 라이브러리와 함께 컴파일한다
+$ gcc -o test test.c -l<라이브러리명> -L<라이브러리 파일 위치>
+```
